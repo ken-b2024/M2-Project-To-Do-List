@@ -29,59 +29,70 @@ def change_task():
     if not task_list:
         print("\nNo tasks available. Returning to Main Menu.")
         return
+    view_task()
+    action = str(input("Enter task to complete or exit: "))
+    if action == 'exit':
+        print("\nReturning to main menu.")
+    for i, task in enumerate(task_list):
+        if task.startswith(action):
+            task_list[i] = task.replace('Incomplete', 'Complete')
+            print("\nTask marked as complete!")
+            multiple_task_change()
+            break
+    else:
+        print("\nNot a valid task. try again...")
+        return
+def remove_task():
+    view_task()
+    action = input("Enter task to remove or exit to return to Main Menu: ")
+    if action == 'exit':
+        print("\nReturning to menu")
+        return
+    for i, task in enumerate(task_list):
+         if task.startswith(action):
+            task_list.remove(task)
+            print("\nTask removed!")
+            multiple_task_remove()
+            break
+    else:
+        print("\nNot a valid task. Try again...")
+def multiple_task_add():
+        while True:
+            action = input("Add another task or exit: ")
+            if action == 'exit':
+                print("\nReturning to main menu.")
+                break
+            else:
+                task_list.append(action + ' Incomplete')
+                print("\nTask added!")
+def multiple_task_change():
     while True:
         view_task()
-        action = str(input("Enter task to complete or exit: "))
+        action = str(input("Enter next task to complete or exit for main menu: "))
+        if action == 'exit':
+            print("\nReturning to main menu.")
+            break
         for i, task in enumerate(task_list):
             if task.startswith(action):
                 task_list[i] = task.replace('Incomplete', 'Complete')
                 print("\nTask marked as complete!")
-                multiple_task_change()
-        else:
-            print("\nInvalid selection. Try again...")
-def remove_task():
-    view_task()
-    action = input("Enter task to remove or exit to return to Main Menu: ")
-    for i, task in enumerate(task_list):
-            if task.startswith(action):
-                task_list.remove(task)
-                print("\nTask removed!")
-                multiple_task_remove()
-    else:
-        print("\nReturning to menu")
-def multiple_task_add():
-        while True:
-            action = input("Add another task or exit: ")
-            if action != 'exit':
-                task_list.append(action + ' Incomplete')
-                print("\nTask added!")
-            else:
                 break
-def multiple_task_change():
-    while True:
-        view_task()
-        try:
-            action = str(input("Enter next task to complete or exit: "))
-            for i, task in enumerate(task_list):
-                if task.startswith(action):
-                    task_list[i] = task.replace('Incomplete', 'Complete')
-                    print("\nTask marked as complete!")
-            if action == 'exit':
-                    break
-        except ValueError:
-            print("Task not found")
+        else:
+            print("\nTask not found. Try again...")
+            break
 def multiple_task_remove():
     while True:
         view_task()
         action = input("Remove another task or exit: ")
-        if action != 'exit':
-                for i, task in enumerate(task_list):
-                    if task.startswith(action):
-                        task_list.remove(task)
-                        print("\nTask removed!")
+        if action == 'exit':
+                print("\nReturning to main menu.")
+                break
+        for i, task in enumerate(task_list):
+            if task.startswith(action):
+                task_list.remove(task)
+                print("\nTask removed!")
         else:
-            break
-
+            print("\nNot a valid task. Try again...")
 while True:
     main_menu()
     try:
